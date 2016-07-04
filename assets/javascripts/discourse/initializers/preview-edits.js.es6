@@ -65,6 +65,7 @@ export default {
 
     TopicListItem.reopen({
       canBookmark: Ember.computed.bool('currentUser'),
+      canLike : Ember.computed.bool('currentUser'),
       rerenderTriggers: ['bulkSelectEnabled', 'topic.pinned', 'likeDifference'],
 
       @on('init')
@@ -186,6 +187,9 @@ export default {
         if (this.get('topic.topic_post_can_like')) {
           actions.push(this._likeButton())
         }
+         if (this.get('canLike')) {
+           actions.push(this._likeButton())
+         }
         if (this.get('canBookmark')) {
           actions.push(this._bookmarkButton())
           Ember.run.scheduleOnce('afterRender', this, () => {
