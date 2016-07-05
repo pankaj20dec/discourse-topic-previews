@@ -186,8 +186,9 @@ export default {
         var actions = []
         if (this.get('topic.topic_post_can_like')) {
           actions.push(this._likeButton())
-        }else if(this.get('canLike')) {
-           actions.push(this._likeButton())
+        }
+         if (this.get('canLike')) {
+           actions.push(this._likeBut())
          }
         if (this.get('canBookmark')) {
           actions.push(this._bookmarkButton())
@@ -247,6 +248,16 @@ export default {
 
       _likeButton() {
         var classes = "topic-like",
+            disabled = false
+        if (this.get('hasLikedDisplay')) {
+          classes += ' has-like'
+          disabled = this.get('topic.topic_post_can_unlike') ? false : this.get('likeDifference') == null
+        }
+        return { class: classes, title: 'post.controls.like', icon: 'heart', disabled: disabled}
+      },
+
+      _likeBut() {
+        var classes = "topic",
             disabled = false
         if (this.get('hasLikedDisplay')) {
           classes += ' has-like'
